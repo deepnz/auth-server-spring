@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -17,7 +18,10 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 
+import javax.sql.DataSource;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,5 +75,19 @@ class ClientConfiguration{
 			}
 		};
 	}
+}
+
+@Configuration
+class UsersConfiguration {
+	 @Bean
+	JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
+		 return new JdbcUserDetailsManager(dataSource);
+	 }
+	 @Bean
+	ApplicationRunner usersRunner(PasswordEncoder pswEncoder, UserDetailsManager usrDetailsMgr){
+		 return args -> {
+			 var builder 
+		 }
+	 }
 }
 	
