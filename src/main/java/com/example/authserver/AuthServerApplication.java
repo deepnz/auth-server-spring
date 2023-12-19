@@ -22,6 +22,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 
 import javax.sql.DataSource;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -79,15 +80,29 @@ class ClientConfiguration{
 
 @Configuration
 class UsersConfiguration {
-	 @Bean
-	JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
-		 return new JdbcUserDetailsManager(dataSource);
-	 }
-	 @Bean
-	ApplicationRunner usersRunner(PasswordEncoder pswEncoder, UserDetailsManager usrDetailsMgr){
-		 return args -> {
-			 var builder 
-		 }
-	 }
+	@Bean
+	JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+		return new JdbcUserDetailsManager(dataSource);
+	}
+
+	@Bean
+	ApplicationRunner usersRunner(UserDetailsManager usrDetailsMgr) {
+		return args -> {
+			var builder = User.builder().roles("USER");
+			var users = Map.of("deepak", "{bcrypt}$2a$10$h0JjKkXogaQTGlUwQb7RcOAe4.J6/d9WuJyqRiQxE27stv6icQwz2", "admin", "{bcrypt}$2a$10$OWmNC3FmLftgkST51PZ5LOj04NgPONkah3Pik0b/v7CWvJcdIBI/O");
+			;
+			users.forEach((username, password) -> {
+				if (!usrDetailsMgr.userExists(username)) {
+					var user = builder
+							.username(username)
+							.password(password)
+							.build();
+
+				}
+			});
+		};
+	}
 }
+
+
 	

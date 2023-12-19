@@ -1,3 +1,4 @@
+--clients
 CREATE TABLE if not exists oauth2_registered_client (
     id                            varchar(100)                            NOT NULL,
     client_id                     varchar(100)                            NOT NULL,
@@ -25,6 +26,6 @@ create table if not exists authorities
 (
     username varchar(200) not null,
     authority varchar(50) not null,
-    constraint fk_authorities_users foreign key (username) references users (username)
+    constraint fk_authorities_users foreign key (username) references users (username),
     constraint username_authority UNIQUE (username, authority)
 );
