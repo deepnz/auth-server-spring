@@ -2,14 +2,14 @@ package com.example.authserver;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -33,12 +33,13 @@ public class AuthServerApplication {
 		SpringApplication.run(AuthServerApplication.class, args);
 	}
 
+
 	@Bean
-	UserDetailsService inMemoryUserDetailsManager() {
+	UserDetailsService inMemoryUserDetailsManager(){
 		var userBuilder = User.builder();
 		return new InMemoryUserDetailsManager(
-				userBuilder.roles("USER").username("deepak").password("{bcrypt}$2a$10$h0JjKkXogaQTGlUwQb7RcOAe4.J6/d9WuJyqRiQxE27stv6icQwz2").build(),
-				userBuilder.roles("USER","ADMIN").username("admin").password("{bcrypt}$2a$10$OWmNC3FmLftgkST51PZ5LOj04NgPONkah3Pik0b/v7CWvJcdIBI/O").build()
+				userBuilder.roles("USER").username("deepak").password("{bcrypt}$2a$10$yy6rxHgqy9HM8a6z3pYvQ.PcJRCsfK5Uu2WOLBZuxGD1nkf4ytIlu").build(),
+				userBuilder.roles("ADMIN").username("admin").password("{bcrypt}$2a$10$CW5lAFw0e/whmlUHPnEjpe7PVwBAP6VqaQzqYjXWLBngdoz67MnVW").build()
 		);
 	}
 	@Bean
@@ -77,32 +78,32 @@ class ClientConfiguration{
 		};
 	}
 }
-
-@Configuration
-class UsersConfiguration {
-	@Bean
-	JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
-		return new JdbcUserDetailsManager(dataSource);
-	}
-
-	@Bean
-	ApplicationRunner usersRunner(UserDetailsManager usrDetailsMgr) {
-		return args -> {
-			var builder = User.builder().roles("USER");
-			var users = Map.of("deepak", "{bcrypt}$2a$10$h0JjKkXogaQTGlUwQb7RcOAe4.J6/d9WuJyqRiQxE27stv6icQwz2", "admin", "{bcrypt}$2a$10$OWmNC3FmLftgkST51PZ5LOj04NgPONkah3Pik0b/v7CWvJcdIBI/O");
-			;
-			users.forEach((username, password) -> {
-				if (!usrDetailsMgr.userExists(username)) {
-					var user = builder
-							.username(username)
-							.password(password)
-							.build();
-
-				}
-			});
-		};
-	}
-}
+//
+//@Configuration
+//class UsersConfiguration {
+//	@Bean
+//	JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+//		return new JdbcUserDetailsManager(dataSource);
+//	}
+//
+//	@Bean
+//	ApplicationRunner usersRunner(UserDetailsManager usrDetailsMgr) {
+//		return args -> {
+//			var builder = User.builder().roles("USER");
+//			var users = Map.of("deepak", "{bcrypt}$2a$10$h0JjKkXogaQTGlUwQb7RcOAe4.J6/d9WuJyqRiQxE27stv6icQwz2", "admin", "{bcrypt}$2a$10$OWmNC3FmLftgkST51PZ5LOj04NgPONkah3Pik0b/v7CWvJcdIBI/O");
+//			;
+//			users.forEach((username, password) -> {
+//				if (!usrDetailsMgr.userExists(username)) {
+//					var user = builder
+//							.username(username)
+//							.password(password)
+//							.build();
+//
+//				}
+//			});
+//		};
+//	}
+//}
 
 
 	
