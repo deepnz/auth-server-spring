@@ -18,10 +18,11 @@ CREATE TABLE if not exists oauth2_registered_client (
 --users
 create table if not exists users
 (
-    users varchar(200) not null primary key,
+    username varchar(200) not null primary key,
     password varchar(500) not null,
     enabled boolean        not null
-);create table if not exists authorities
+);
+create table if not exists authorities
   (
       username  varchar(200) not null,
       authority varchar(50)  not null,
@@ -37,7 +38,7 @@ create table if not exists users
       authorities          varchar(1000) NOT NULL,
       PRIMARY KEY (registered_client_id, principal_name)
   );
-
+-- convert blob to text in postgresql
   create table if not exists oauth2_authorization
   (
       id                            varchar(100) NOT NULL,

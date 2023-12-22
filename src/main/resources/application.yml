@@ -6,18 +6,18 @@ spring:
   sql:
     init:
       mode: always
-  security:
-     oauth2:
-       authorizationserver:
-         client:
-          crm-client:
-            require-authorization-consent: true
-            registration:
-              # app/app
-              client-id: app
-              client-secret: "{bcrypt}$2a$10$2.v1HhI.JGQuzC5/Uc0oFud82ufoLkH93ER8PvGmjKCWp1x41FooC"
-              authorization-grant-types: client_credentials, authorization_code, refresh_token
-              redirect-uris: http://127.0.0.1:8082/login/oauth2/code/spring
-              scopes: user.read, user.write, openid
-              client-authentication-methods: client_secret_basic
+#  security:
+#     oauth2:
+#       authorizationserver:
+#         client:
+#          crm-client:
+#            require-authorization-consent: true
+#            registration:
+#              # app/app
+#              client-id: app
+#              client-secret: "{bcrypt}$2a$10$2.v1HhI.JGQuzC5/Uc0oFud82ufoLkH93ER8PvGmjKCWp1x41FooC"
+#              authorization-grant-types: client_credentials, authorization_code, refresh_token
+#              redirect-uris: http://127.0.0.1:8082/login/oauth2/code/spring
+#              scopes: user.read, user.write, openid
+#              client-authentication-methods: client_secret_basic
 
