@@ -1,4 +1,9 @@
 HELP.md
+
+/src/main/resources/app.key
+/src/main/resources/app.pub
+/src/main/resources/cert.pem
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
